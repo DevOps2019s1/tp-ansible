@@ -1,0 +1,78 @@
+- name: install dependencies
+  yum: name={{ item }} state=present
+  with_items: 
+    - httpd-devel 
+    - apr 
+    - apr-devel 
+    - apr-util 
+    - apr-util-devel 
+    - gcc 
+    - make 
+    - libtool 
+    - autoconf
+
+- name: get mod_jk tar
+  get_url: url=http://apache.mirrors.benatherton.com/tomcat/tomcat-connectors/jk/tomcat-connectors-1.2.46-src.tar.gz dest=/opt/
+
+- name: unpack tar
+  unarchive: 
+    remote_src: yes
+    src: /opt/tomcat-connectors-1.2.46-src.tar.gz 
+    dest: /opt/
+
+- name: configure mod_jk
+  command: "{{ item }} chdir=/opt/tomcat-connectors-1.2.46-src/native"
+  with_items:
+    - ./configure --with-apxs=/usr/bin/apxs --enable-api-compatibility
+    - make
+    - libtool --finish /usr/lib64/httpd/modules
+    - make install
+
+- name: insert lines in sysctl.conf if not already configured
+  lineinfile:
+    dest: /etc/sysctl.conf
+    line: "{{ item }}"
+  with_items:
+    - 'LoadModule jk_module modules/mod_jk.so'
+    - 'JkWorkersFile "/etc/httpd/conf/workers.properties"'
+    - 'JkLogFile     "/var/log/mod_jk.log"'
+    - 'JkLogLevel  info'
+    - 'JkLogStampFormat "[%a %b %d %H:%M:%S %Y] "'
+    - 'JkOptions     +ForwardKeySize +ForwardURICompat -ForwardDirectories'
+    - 'JkRequestLogFormat     "%w %V %T"'
+
+- name: Create workers file if not exists
+  file:
+    path: "/etc/httpd/conf/workers.properties"
+    state: touch
+
+- name: insert lines in workers.properties if not configured
+  lineinfile:
+    dest: /etc/httpd/conf/workers.properties
+    line: "{{ item }}"
+  with_items:
+    - 'worker.list=app1,app2'
+    - 'worker.app1.type=ajp13'
+    - 'worker.app1.host=app1.example.com'
+    - 'worker.app1.port=8201'
+    - 'worker.app1.socket_timeout=10'
+    - 'worker.app2.type=ajp13'
+    - 'worker.app2.host=app2.example.com'
+    - 'worker.app2.port=8201'
+    - 'worker.app1.socket_timeout=10'
+
+- name: restart Apache
+  service: name=httpd state=restarted
+
+
+
+
+
+
+
+
+
+
+
+
+

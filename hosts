@@ -1,0 +1,26 @@
+# Lines beginning with a # are comments, and are only included for
+# illustration. These comments are overkill for most inventory files.
+
+# Tomcat
+[tomcat-server]
+192.168.100.26
+
+# Apache
+[apache-server]
+192.168.100.27
+
+# MariaDB
+[db-server]
+192.168.100.28
+
+# Group 'multi' with all servers
+[all:children]
+tomcat-server
+apache-server
+db-server
+
+# Variables that will be applied to all servers
+[all:vars]
+ansible_ssh_user=vagrant
+ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'

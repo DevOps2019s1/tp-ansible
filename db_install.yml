@@ -1,0 +1,42 @@
+- name: Install MYSQL
+  yum: name=mariadb-server state=present
+
+- name: Install the Python MySQL Support Libraries
+  yum: name=MySQL-python state=latest
+
+- name: start mysql server and enable it on reboot
+  service: name=mariadb state=started enabled=true #debian: mysql
+
+- name: Copy the root credentials as .my.cnf file
+  template: src=root.cnf.j2 dest=~/.my.cnf mode=0600
+
+- name: update mysql root password for all root accounts
+  mysql_user:
+    name: root
+    host: "{{ item }}"
+    password: "BOURNE"
+    login_user: root
+    login_password: "BOURNE"
+    check_implicit_admin: yes
+    priv: "*.*:ALL,GRANT"
+  with_items:
+    - "localhost"
+    - 127.0.0.1
+    - ::1
+    - localhost
+
+- name: Create employes database
+  mysql_db: name=employes state=present login_user=root login_password=BOURNE
+
+- name: copy import file
+  copy:
+    src: import.sql
+    dest: ./
+
+- name: Import DB 
+  mysql_db:
+    name: employes
+    state: import
+    login_user: root
+    login_password: BOURNE
+    target: ./import.sql

@@ -1,0 +1,70 @@
+# steps : install java, then install tomcat
+- name: Install Java 1.7
+  yum: name=java-1.7.0-openjdk state=present
+
+- name: add group "tomcat"
+  group: name=tomcat
+
+- name: add user "tomcat"
+  user: name=tomcat group=tomcat home=/usr/share/tomcat createhome=no
+  become: True
+  become_method: sudo
+
+- name: Download Tomcat
+  get_url: url=http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.61/bin/apache-tomcat-7.0.61.tar.gz dest=/opt/apache-tomcat-7.0.61.tar.gz
+
+- name: Extract archive
+  command: chdir=/usr/share /bin/tar xvf /opt/apache-tomcat-7.0.61.tar.gz -C /opt/ creates=/opt/apache-tomcat-7.0.61
+
+- name: Symlink install directory
+  file: src=/opt/apache-tomcat-7.0.61 path=/usr/share/tomcat state=link
+
+- name: Change ownership of Tomcat installation
+  file: path=/usr/share/tomcat/ owner=tomcat group=tomcat state=directory recurse=yes
+
+# steps : configure tomcat server and users
+# necessary files : server.xml (~/ansible-projet/roles/common/templates/server.xml) to configure server
+# necessary files : tomcat-users.xml (~/ansible-projet/roles/common/templates/tomcat-users.xml) to configure users
+
+- name: Configure Tomcat server
+  template: src=~/vagrant-projet-2/server.xml dest=/usr/share/tomcat/conf/
+
+- name: Configure Tomcat users
+  template: src=~/vagrant-projet-2/tomcat-users.xml dest=/usr/share/tomcat/conf/
+
+# steps : create tomcat service file and start tomcat service
+# necessary files : tomcat-initscript.sh (~/ansible-projet/roles/common/files/tomcat-initscript.sh) is the service creation script
+
+- name: Install Tomcat init script
+  copy: src=~/vagrant-projet-2/tomcat-initscript.sh dest=/etc/init.d/tomcat mode=0755
+
+- name: Start Tomcat
+  service: name=tomcat state=started enabled=yes
+
+# steps : configure firewall daemon to enable connection
+
+- name: deploy iptables rules
+  template: src=~/vagrant-projet-2/iptables-save dest=/etc/sysconfig/iptables
+  when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '6'"
+
+- name: ensure firewalld is running
+  service: name=firewalld state=started
+
+- name: insert firewalld rule for tomcat http port
+  firewalld: port=8080/tcp permanent=true state=enabled immediate=yes
+  when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
+
+- name: insert firewalld rule for tomcat https port
+  firewalld: port=8081/tcp permanent=true state=enabled immediate=yes
+  when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
+
+- name: deploy war on tomcat webapps
+  copy: src=~/vagrant-projet-2/sample.war dest=/opt/apache-tomcat-7.0.61/webapps/sample.war
+
+# steps : restart tomcat service to finish installation
+
+- name: wait for tomcat to start
+  wait_for: port=8080
+
+- name: restart tomcat
+  service: name=tomcat state=restarted
