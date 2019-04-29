@@ -1,0 +1,7 @@
+- name: Install mariadb
+  hosts: db-server
+  become: True
+  become_method: sudo
+  tasks:
+  - name: Install MariaDB
+    include: db_install.yml

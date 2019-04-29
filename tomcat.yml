@@ -1,0 +1,7 @@
+- name: Install tomcat
+  hosts: tomcat-server
+  become: True
+  become_method: sudo
+  tasks:
+  - name: Install Tomcat
+    include: tomcat_install.yml

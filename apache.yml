@@ -1,0 +1,14 @@
+#apache.yml calls the apache_install.yml task file to do all necessary tasks to install apache
+- name: Install apache
+  hosts: apache-server
+  become: True
+  become_method: sudo
+  tasks:
+  - name: Install and configure apache
+    include: apache_install.yml
+
+
+
+
+
+

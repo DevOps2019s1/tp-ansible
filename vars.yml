@@ -1,0 +1,8 @@
+vars: 
+  - tomcat_link: http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.61/bin/apache-tomcat-7.0.61.tar.gz
+  - server_path: ~/ansible-projet-2/server.xml
+  - user_path: ~/ansible-projet-2/tomcat-users.xml
+  - initscript_path: ~/ansible-projet-2/tomcat-initscript.sh
+  - iptables_path: ~/ansible-projet-2/iptables-save
+  - http_tomcat_port: 8080
+  - https_tomcat_port: 8081
