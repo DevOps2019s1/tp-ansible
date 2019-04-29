@@ -10,6 +10,8 @@
     - make 
     - libtool 
     - autoconf
+    - mysql
+    - telnet
 
 - name: get mod_jk tar
   get_url: url=http://apache.mirrors.benatherton.com/tomcat/tomcat-connectors/jk/tomcat-connectors-1.2.46-src.tar.gz dest=/opt/
