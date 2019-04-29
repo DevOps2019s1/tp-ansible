@@ -33,16 +33,16 @@
 # necessary files : tomcat-users.xml (~/ansible-projet/roles/common/templates/tomcat-users.xml) to configure users
 
 - name: Configure Tomcat server
-  template: src=~/vagrant-projet-2/server.xml dest=/usr/share/tomcat/conf/
+  template: src=server.xml dest=/usr/share/tomcat/conf/
 
 - name: Configure Tomcat users
-  template: src=~/vagrant-projet-2/tomcat-users.xml dest=/usr/share/tomcat/conf/
+  template: src=tomcat-users.xml dest=/usr/share/tomcat/conf/
 
 # steps : create tomcat service file and start tomcat service
 # necessary files : tomcat-initscript.sh (~/ansible-projet/roles/common/files/tomcat-initscript.sh) is the service creation script
 
 - name: Install Tomcat init script
-  copy: src=~/vagrant-projet-2/tomcat-initscript.sh dest=/etc/init.d/tomcat mode=0755
+  copy: src=tomcat-initscript.sh dest=/etc/init.d/tomcat mode=0755
 
 - name: Start Tomcat
   service: name=tomcat state=started enabled=yes
@@ -50,7 +50,7 @@
 # steps : configure firewall daemon to enable connection
 
 - name: deploy iptables rules
-  template: src=~/vagrant-projet-2/iptables-save dest=/etc/sysconfig/iptables
+  template: src=iptables-save dest=/etc/sysconfig/iptables
   when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '6'"
 
 - name: ensure firewalld is running
@@ -65,7 +65,7 @@
   when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
 
 - name: deploy war on tomcat webapps
-  copy: src=~/vagrant-projet-2/sample.war dest=/opt/apache-tomcat-7.0.61/webapps/sample.war
+  copy: src=sample.war dest=/opt/apache-tomcat-7.0.61/webapps/sample.war
 
 # steps : restart tomcat service to finish installation
 
