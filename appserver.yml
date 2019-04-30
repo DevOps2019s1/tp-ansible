@@ -1,0 +1,7 @@
+---
+- name: Install appserver
+  hosts: "{{ ip-webserver }}"
+  become: True
+  become_method: sudo
+  roles: 
+    - apache

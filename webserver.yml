@@ -1,0 +1,7 @@
+---
+- name: Install webserver
+  hosts: 192.168.60.4
+  become: True
+  become_method: sudo
+  roles: 
+    - apache
