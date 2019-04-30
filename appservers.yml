@@ -1,6 +1,6 @@
 ---
 - name: TOMCAT | INSTALL
-  hosts: all
+  hosts: app-server
   become: yes
   gather_facts: yes
   vars:
