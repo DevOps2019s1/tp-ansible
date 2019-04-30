@@ -1,0 +1,6 @@
+---
+#file: appservers.yml
+- hosts: appservers.yml
+  roles:
+    - tomcat
+    - deploy_app
