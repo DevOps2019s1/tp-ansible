@@ -1,0 +1,15 @@
+- name: install dependencies
+  yum: name={{ item }} state=present
+  with_items: 
+    - httpd-devel 
+    - apr 
+    - apr-devel 
+    - apr-util 
+    - apr-util-devel 
+    - gcc 
+    - make 
+    - libtool 
+    - autoconf
+
+- name: restart Apache
+  service: name=httpd state=restarted

@@ -1,0 +1,7 @@
+- name: Install appserver
+  hosts: appservers
+  become: True
+  become_method: sudo
+  roles: 
+    - appservers
+    - deploy_app

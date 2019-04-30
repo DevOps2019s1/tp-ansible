@@ -1,0 +1,6 @@
+tasks:
+  - name: download app war
+    get_url: https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war dest=./sample.war
+
+  - name: deploy war on tomcat webapps
+    copy: src=sample.war dest=/opt/apache-tomcat-7.0.61/webapps/sample.war
