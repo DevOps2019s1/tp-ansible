@@ -2,3 +2,4 @@
 # tasks file for apache
 - name: Install Apache
   include: install-apache.yml
+  become: yes
