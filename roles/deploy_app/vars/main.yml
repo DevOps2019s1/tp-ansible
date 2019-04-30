@@ -1,0 +1,4 @@
+---
+# vars file for deploy_app
+sample_link: https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war
+webapps_path: /opt/apache-tomcat-7.0.61/webapps

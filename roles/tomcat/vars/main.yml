@@ -1,0 +1,7 @@
+---
+# vars file for tomcat
+tomcat_link: http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.61/bin/apache-tomcat-7.0.61.tar.gz
+tomcat_path: /opt/apache-tomcat-7.0.61
+http_port: 8080
+https_port: 8081
+ajp13_port: 8009

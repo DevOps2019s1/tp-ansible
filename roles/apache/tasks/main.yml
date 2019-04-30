@@ -2,3 +2,6 @@
 # tasks file for apache
 - name: Install Apache
   include: install-apache.yml
+
+- name: Configure mod_jk
+  include: configure-modjk.yml

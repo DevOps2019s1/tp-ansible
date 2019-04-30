@@ -1,0 +1,34 @@
+- name: get mod_jk tar
+  get_url: url=http://apache.mirrors.benatherton.com/tomcat/tomcat-connectors/jk/tomcat-connectors-1.2.46-src.tar.gz dest=/opt/ validate_certs=False
+
+- name: unpack tar
+  unarchive: 
+    remote_src: yes
+    src: /opt/tomcat-connectors-1.2.46-src.tar.gz 
+    dest: /opt/
+
+- name: configure mod_jk
+  command: "{{ item }} chdir=/opt/tomcat-connectors-1.2.46-src/native"
+  with_items:
+    - ./configure --with-apxs=/usr/bin/apxs --enable-api-compatibility
+    - make
+    - libtool --finish /usr/lib64/httpd/modules
+    - make install
+
+- name: insert lines in workers.properties if not configured
+  template:
+    src: workers.properties
+    dest: /etc/httpd/conf/workers.properties
+
+- name: insert lines in 00-mod_jk.conf
+  template:
+    src: 00-mod_jk.conf
+    dest: /etc/httpd/conf.modules.d/00-mod_jk.conf 
+
+- name: insert lines in conf.d if not configured
+  template:
+    src: sample.conf
+    dest: /etc/httpd/conf.d/sample.conf
+  notify: restart Apache
+
+

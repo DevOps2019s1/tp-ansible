@@ -1,0 +1,4 @@
+---
+# tasks file for tomcat
+- name: Deploy app
+  include: deploy-app.yml
