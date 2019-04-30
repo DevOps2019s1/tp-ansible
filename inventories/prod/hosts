@@ -1,0 +1,9 @@
+# illustration. These comments are overkill for most inventory files.
+
+# Web-server
+[web-server]
+192.168.60.14
+
+# app-server
+[app-server]
+192.168.60.15

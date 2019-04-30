@@ -1,0 +1,21 @@
+# illustration. These comments are overkill for most inventory files.
+
+# Web-server
+[web-server]
+192.168.60.14
+
+# app-server
+[app-server]
+192.168.60.15
+
+# Group 'allmariadb' with all servers
+[all:children]
+[web-server]
+[app-server]
+[db-server]
+# Variables that will be applied to all servers
+[all:vars]
+ansible_ssh_user=vagrant
+ansible_password=vagrant
+ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
