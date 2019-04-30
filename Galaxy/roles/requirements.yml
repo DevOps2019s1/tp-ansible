@@ -1,3 +1,4 @@
 # from galaxy
+- src: robertdebock.java
 - src: robertdebock.tomcat
 - src: robertdebock.service

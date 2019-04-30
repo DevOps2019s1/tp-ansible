@@ -1,7 +1,7 @@
 ---
 - name: install dependencies
   yum: 
-    name: {{ item }} 
+    name: "{{ item }}" 
     state: present
   with_items:
     - httpd-devel
@@ -18,7 +18,9 @@
 
 - name: get mod_jk tar
   get_url: 
-    url: http://apache.mirrors.benatherton.com/tomcat/tomcat-connectors/jk/tomcat-connectors-1.2.46-src.tar.gz dest=/opt/
+    url: http://apache.mirrors.benatherton.com/tomcat/tomcat-connectors/jk/tomcat-connectors-1.2.46-src.tar.gz
+    dest: /opt/
+    validate_certs: False
 
 - name: unpack tar
   unarchive:
@@ -43,6 +45,10 @@
   template:
     src: workers.properties
     dest: /etc/httpd/conf/workers.properties
+- name: insert lines in sample.conf if not configured
+  template:
+    src: sample.conf
+    dest: /etc/httpd/conf.d/sample.conf
 
 - name: restart Apache
   service: 

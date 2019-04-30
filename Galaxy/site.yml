@@ -1,0 +1,14 @@
+---
+
+  #ici on importe tous les playbooks qu'on va utiliser dans le projet 
+
+  #playbook qui va appeler mon rôle APACHE
+- import_playbook: webservers.yml  
+
+
+#- import_playbook: appserver.yml 
+
+#- import_playbook: deployserver.yml 
+
+#- import_playbook: dbserver.yml 
+
