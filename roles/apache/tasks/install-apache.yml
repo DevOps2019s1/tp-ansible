@@ -1,0 +1,50 @@
+---
+- name: install dependencies
+  yum: 
+    name: {{ item }} 
+    state: present
+  with_items:
+    - httpd-devel
+    - apr
+    - apr-devel
+    - apr-util
+    - apr-util-devel
+    - gcc
+    - make
+    - libtool
+    - autoconf
+    - mysql
+    - telnet
+
+- name: get mod_jk tar
+  get_url: 
+    url: http://apache.mirrors.benatherton.com/tomcat/tomcat-connectors/jk/tomcat-connectors-1.2.46-src.tar.gz dest=/opt/
+
+- name: unpack tar
+  unarchive:
+    remote_src: yes
+    src: /opt/{{ mod_jk_bin }}
+    dest: /opt/
+
+- name: configure mod_jk
+  command: "{{ item }} chdir=/opt/tomcat-connectors-1.2.46-src/native"
+  with_items:
+    - ./configure --with-apxs=/usr/bin/apxs --enable-api-compatibility
+    - make
+    - libtool --finish /usr/lib64/httpd/modules
+    - make install
+
+- name: insert lines in workers.properties if not configured
+  template:
+    src: 00-mod_jk.conf
+    dest: /etc/httpd/conf.modules.d
+
+- name: insert lines in workers.properties if not configured
+  template:
+    src: workers.properties
+    dest: /etc/httpd/conf/workers.properties
+
+- name: restart Apache
+  service: 
+    name: httpd 
+    state: restarted
