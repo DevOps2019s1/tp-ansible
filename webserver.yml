@@ -1,6 +1,6 @@
 ---
 - name: Install webserver
-  hosts: 192.168.60.4
+  hosts: "{{ ip-webserver }}"
   become: True
   become_method: sudo
   roles: 

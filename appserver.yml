@@ -1,7 +1,8 @@
 ---
 - name: Install appserver
-  hosts: "{{ ip-webserver }}"
+  hosts: "{{ ip-appserver }}"
   become: True
   become_method: sudo
   roles: 
-    - apache
+    - tomcat
+    - deploy
