@@ -1,0 +1,3 @@
+---
+- name: get sample.war
+  get_url: url={{ get_sample }} dest={{ dest_sample }}/sample.war

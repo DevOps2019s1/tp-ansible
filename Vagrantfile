@@ -17,10 +17,6 @@ Vagrant.configure("2") do |config|
       # static ip address
       app.vm.network :private_network, ip: "192.168.60.15"
 
-      app.vm.provision "playbook-app", type:'ansible' do |ansible|
-        ansible.playbook = "appserver.yml"
-      end
-
     end
 
 end

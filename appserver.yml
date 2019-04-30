@@ -1,7 +1,7 @@
 - name: Install appserver
-  hosts: appservers
+  hosts: app-server
   become: True
   become_method: sudo
   roles: 
-    - appservers
+    - tomcat
     - deploy_app
