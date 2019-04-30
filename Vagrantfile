@@ -1,20 +1,20 @@
-Vagrant.configure(&quot;2&quot;) do |config|
+Vagrant.configure("2") do |config|
   # Linux OS CentOS
-  config.vm.box = &quot;geerlingguy/centos7&quot;
+  config.vm.box = "geerlingguy/centos7";
   # Web server
-  config.vm.define &quot;web-server&quot; do |web|
-    web.vm.hostname = &quot;devops-web.dev&quot;
+  config.vm.define "web-server" do |web|
+    web.vm.hostname = "devops-web.dev";
     # static ip address
-    web.vm.network :private_network, ip: &quot;192.168.60.14&quot;
+    web.vm.network :private_network, ip: "192.168.60.14"
     web.vm.network :forwarded_port, guest: 80, host: 8080
   end
   # Application server
-  config.vm.define &quot;app-server&quot; do |app|
-    app.vm.hostname = &quot;devops-app.dev&quot;
+  config.vm.define "app-server" do |app|
+    app.vm.hostname = "devops-app.dev";
     # static ip address
-    app.vm.network :private_network, ip: &quot;192.168.60.15&quot;
-    app.vm.provision &quot;playbook-app&quot;, type:&#39;ansible&#39; do |ansible|
-      ansible.playbook = &quot;appservers.yml&quot;
+    app.vm.network :private_network, ip: "192.168.60.15"
+    app.vm.provision "playbook-app", type:'ansible' do |ansible|
+      ansible.playbook = "appservers.yml"
     end
   end
 end
