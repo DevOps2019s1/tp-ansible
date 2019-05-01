@@ -1,0 +1,4 @@
+---
+# tasks file for apache
+- name: deploy smple.war aon tomcat ( appserver)
+  include: deploy_samplewar_playbook.yml

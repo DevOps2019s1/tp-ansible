@@ -1,4 +1,5 @@
 ---
+# Machine Applicative java / tomcat / deploy sample.war
 - name: Install appserver
   hosts: "{{ ip-appserver }}"
   become: True

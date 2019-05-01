@@ -1,7 +1,9 @@
 ---
+# Machine server java / apache / mod-jk
 - name: Install webserver
   hosts: "{{ ip-webserver }}"
   become: True
   become_method: sudo
   roles: 
     - apache
+    - modjk

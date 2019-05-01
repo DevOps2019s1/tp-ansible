@@ -1,0 +1,4 @@
+---
+# tasks file for apache
+- name: install apache
+  include: install_modjk_playbook.yml
