@@ -1,0 +1,8 @@
+# from galaxy
+- geerlingguy.firewall
+- geerlingguy.ntp
+- geerlingguy.git
+- geerlingguy.java
+- geerlingguy.jenkins
+- geerlingguy.repo-epel
+- geerlingguy.ansible
