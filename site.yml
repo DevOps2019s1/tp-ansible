@@ -1,4 +1,0 @@
-#main.yml calls all 3 playbooks for apache, tomcat and mysql
-- import_playbook: apache.yml
-- import_playbook: tomcat.yml
-- import_playbook: mariadb.yml
