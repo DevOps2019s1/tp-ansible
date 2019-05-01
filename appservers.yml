@@ -1,0 +1,20 @@
+---
+- name: TOMCAT  |  INSTALL
+  hosts: appservers
+  become: yes
+  gather_facts: yes
+
+  vars:
+    tomcat_instances:
+      - name: "tomcat-with-wars"
+        version: 8
+        shutdown_port: 8021
+        non_ssl_connector_port: 8080
+        ssl_connector_port: 8443
+        ajp_port: 8009
+        xms: 256M
+        xmx: 512M
+        wars:
+          - url: https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war
+  roles:
+    - robertdebock.tomcat

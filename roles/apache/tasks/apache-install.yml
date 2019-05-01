@@ -1,0 +1,28 @@
+---
+- name: install dependencies
+  yum:
+    name: "httpd,httpd-devel,apr,apr-devel,apr-util,apr-util-devel,gcc,gcc-c++,make,libtool,autoconf"
+    state: present
+
+- name: Ensure Apache on system reboot
+  service: name=httpd enabled=yes state=restarted
+
+- name: Open port 80 for http access
+  firewalld:
+    service: http
+    permanent: true
+    state: enabled
+
+- name: Restart the firewalld service to load in the firewall changes
+  service: 
+    name: firewalld 
+    state: restarted
+
+
+
+
+
+
+
+
+
