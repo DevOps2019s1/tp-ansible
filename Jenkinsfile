@@ -1,6 +1,6 @@
 
 pipeline{
-agent vagrant
+agent all
 stages{
 stage('Deploiement Ansible') {
     steps{
