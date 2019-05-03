@@ -1,6 +1,6 @@
 
 pipeline{
-agent all
+agent any
 stages{
 stage('Deploiement Ansible') {
     steps{
