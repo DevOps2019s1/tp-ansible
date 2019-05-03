@@ -1,0 +1,11 @@
+- name: install Apache
+  hosts: 192.168.60.5
+  become_user: root
+  become: yes
+  tasks:
+     - name: Install Apache.
+       yum: 
+           name: "httpd, httpd-devel" 
+           state: present
+     - name: Make sure Apache is started now and at boot.
+       service: name=httpd state=started enabled=yes

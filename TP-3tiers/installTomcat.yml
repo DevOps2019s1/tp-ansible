@@ -1,0 +1,9 @@
+- name: install Tomcat
+  hosts: 192.168.60.4
+  become_user: root
+  become: yes
+  tasks:
+      - name: Install Tomcat.
+        yum: 
+          name: "tomcat"
+          state: present
