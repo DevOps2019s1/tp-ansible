@@ -1,8 +1,7 @@
-
 pipeline{
 agent any
 stages{
-stage('Deploiement Ansible') {
+   stage('Deploiement Ansible') {
     steps{
     ansiblePlaybook (
       become: true,
