@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     def tfHome = tool name: 'Ansible'
-                    env.PATH = "${/usr/bin/ansible}:${env.PATH}"
+                    env.PATH = "${/home/vagrant/.ansible/plugins/modules}:${env.PATH}"
                     sh 'ansible --version'
                 }
             }
