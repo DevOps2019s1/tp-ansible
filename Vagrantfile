@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
       web.vm.hostname = "devops-web.dev"
       # static ip address
       web.vm.network :private_network, ip: "192.168.60.14"
-      web.vm.network :forwarded_port, guest: 80, host: 8080
+      web.vm.network :forwarded_port, guest: 80, host: 8082
     end
       
     # Application server
