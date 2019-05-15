@@ -1,0 +1,22 @@
+apiVersion: v1
+
+kind: Pod
+metadata:
+# CURL POD
+  name: curl
+  namespace: apps-dev
+spec:
+  containers:
+  - command:
+    - sh
+    - -c
+    - while true;do sleep 1;done
+    name: curl    
+    image: pstauffer/curl:latest
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "0.25"
+      limits:
+        memory: "128Mi"
+        cpu: "0.5" 

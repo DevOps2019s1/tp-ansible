@@ -1,4 +1,0 @@
----
-# tasks file for apache
-- name: install apache
-  include: install_apache_playbook.yml

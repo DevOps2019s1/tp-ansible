@@ -1,0 +1,43 @@
+apiVersion: v1
+
+kind: Pod
+metadata:
+  name: nginx-go
+  namespace: apps-dev
+spec:
+  #namespace: apps-web
+  containers:
+# NGINX
+  - name: nginx
+    image: greglebreton/nginx:nginx
+    command:
+    - /usr/bin/nginx
+    - -g
+    - daemon off;
+    - -q
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "0.25"
+      limits:
+        memory: "128Mi"
+        cpu: "0.5"
+    ports:
+    - containerPort: 80
+# GO APP
+  - name: go    
+    image: greglebreton/appligo:golang
+    command:
+    - sh
+    - -c
+    - while true;do sleep 1;done
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "0.25"
+      limits:
+        memory: "128Mi"
+        cpu: "0.5"
+
+  imagePullSecrets:
+  - name: docker-hub-cred

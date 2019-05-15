@@ -1,5 +1,0 @@
----
-# install java and tomcat from other sources
-- src: robertdebock.java
-- src: robertdebock.tomcat
-- src: robertdebock.service
