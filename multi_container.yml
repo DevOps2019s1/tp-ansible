@@ -21,6 +21,20 @@ spec:
     imagePullPolicy: Always
     ports:
     - containerPort: 8080
+    livenessProbe:
+      exec:
+        command:
+        - cat
+        - /go/bin/test 
+      initialDelaySeconds: 10
+      periodSeconds: 5
+    readinessProbe:
+      exec:
+        command:
+        - cat
+        - /go/bin/test
+      initialDelaySeconds: 15
+      periodSeconds: 5
 
   imagePullSecrets:
   - name: regcred
