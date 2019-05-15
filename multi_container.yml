@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-pod
+  namespace: apps-dev
+spec:
+  containers:
+  - name: nginx
+    image: henryl39/nginx:firsttry
+    command:
+    - /usr/sbin/nginx
+    - -g
+    - daemon off;
+    - -q
+    imagePullPolicy: Always
+    ports:
+    - containerPort: 80
+
+  - name: go
+    image: henryl39/go:firsttry
+    imagePullPolicy: Always
+    ports:
+    - containerPort: 8080
+
+  imagePullSecrets:
+  - name: regcred
