@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-go
+  namespace: web-go
+spec:
+  containers:
+  - name: nginx
+    image: ayoubchemingui/goolang
+    imagePullPolicy: Always
+    resources:
+      requests:
+        memory: "200Mi"
+        cpu: "400m"
+      limits:
+        memory: "800Mi"
+        cpu: "800m"
+   
+  - name: go  
+    image: ayoubchemingui/nginxgo
+    command: ["nginx"]
+    args: ["-g daemon off;","-q"]
+    resources:
+      requests:
+        memory: "200Mi"
+        cpu: "400m"
+      limits:
+        memory: "800Mi"
+        cpu: "800m"
+    ports:
+    - containerPort: 80
+    imagePullPolicy: IfNotPresent
+
+  imagePullSecrets:
+  - name: registryhub  
+
