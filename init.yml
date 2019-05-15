@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-web
+  namespace: apps-dev
+spec:
+  containers:
+  - name: nginx
+    image: ninjasimov/hello-app-reversep:1.0.1
+    ports:
+      - containerPort: 80
+  - name: hello-app
+    image: ninjasimov/hello-webapp:1.0.1
+    ports:
+      - containerPort: 8080
+  imagePullSecrets:
+  - name: helloapp-tp
