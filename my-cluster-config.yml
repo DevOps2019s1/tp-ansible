@@ -27,10 +27,6 @@ spec:
 # GO APP
   - name: go    
     image: greglebreton/appligo:golang
-    command:
-    - sh
-    - -c
-    - while true;do sleep 1;done
     resources:
       requests:
         memory: "64Mi"
